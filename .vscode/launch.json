@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HelloWorldApplication<hello_world>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.edu.iftm.tspi.pmvc.hello_world.HelloWorldApplication",
+            "projectName": "hello_world",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Aula20241021Application<aula20241021>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.aula20241021.Aula20241021Application",
+            "projectName": "aula20241021",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
