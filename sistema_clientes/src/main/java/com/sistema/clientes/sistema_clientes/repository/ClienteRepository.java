@@ -22,4 +22,9 @@ public class ClienteRepository {
     public List<Cliente> getClientes() {
         return clientes;
     }
+
+    public void addCliente(Cliente cliente) {
+        // TODO Auto-generated method stub
+        this.clientes.add(cliente);
+    }
 }

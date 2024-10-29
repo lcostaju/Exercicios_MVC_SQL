@@ -11,6 +11,10 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    public Cliente(){
+        
+    }
+
     public Integer getCodigo() {
         return codigo;
     }
