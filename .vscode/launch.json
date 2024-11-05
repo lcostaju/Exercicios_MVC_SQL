@@ -29,6 +29,16 @@
             "projectName": "sistema_clientes",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Aula20241104Application<aula20241104>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.edu.iftm.tspi.pmvc.aula20241104.Aula20241104Application",
+            "projectName": "aula20241104",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

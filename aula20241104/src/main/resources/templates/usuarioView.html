@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.thymeleaf.org">
+
+</html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p th:text="${nomeUsuario}">Nome do Usuário</p>
+    <p th:text="${usuario.nome}">Nome do Usuário</p>
+    <p th:if="${usuario.isAdministrador}">Este é um conteúdo exclusivo para administradores .</p>
+    <ul>
+        <li th:each="nome: ${nomes}" th:text="${nome}">Nome</li>
+    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Administrador</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario:${usuarios}">
+                <td th:text="${usuario.nome}">Nome do usuario</td>
+                <td th:text="${usuario.login}">Nome do usuario></td>
+                <td th:text="${usuario.administrador? 'Sim':'Não'}">Nome do usuario></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
