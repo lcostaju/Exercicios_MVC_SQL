@@ -8,12 +8,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" th:href="@{/css/table-style.css}">
 </head>
 
 <body>
     <p th:text="${nomeUsuario}">Nome do Usuário</p>
     <p th:text="${usuario.nome}">Nome do Usuário</p>
     <p th:if="${usuario.isAdministrador}">Este é um conteúdo exclusivo para administradores .</p>
+    <p th:unless="${usuario.isAdministrador}">Você não tem permissões de administrador</p>
     <ul>
         <li th:each="nome: ${nomes}" th:text="${nome}">Nome</li>
     </ul>
@@ -24,13 +27,17 @@
                 <th>Nome</th>
                 <th>Login</th>
                 <th>Administrador</th>
+                <th>Imagem</th>
+                <th>Açoes</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="usuario:${usuarios}">
                 <td th:text="${usuario.nome}">Nome do usuario</td>
-                <td th:text="${usuario.login}">Nome do usuario></td>
-                <td th:text="${usuario.administrador? 'Sim':'Não'}">Nome do usuario></td>
+                <td th:text="${usuario.login}">Login do usuario></td>
+                <td th:text="${usuario.administrador? 'Sim':'Não'}">Admin</td>
+                <td><img th:src="@{/images/profiles/{login}.png(login=${usuario.login})}" alt="Perfil" width="100" height="100"></td>
+                <td><a th:href="@{/editar/{login}(login=${usuario.login})}">Editar</a></td>
             </tr>
         </tbody>
     </table>

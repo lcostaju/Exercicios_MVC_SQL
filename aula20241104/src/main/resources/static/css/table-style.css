@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    color: O#333;
+}
+
+table,
+th,
+td {
+    border: 1px solid white;
+    padding: 10px;
+}
+
+th{
+    background-color: green;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even){
+    background-color: rgb(174, 163, 163);
+}

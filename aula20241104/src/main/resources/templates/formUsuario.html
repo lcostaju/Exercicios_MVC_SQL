@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario usuário</title>
+</head>
+<body>
+    <h2>Formulario de Usuário</h2>
+    <form th:action="@{${'/novo'}}" th:object="${usuario}" method="post">
+    <label for="">Nome:</label>
+    <input type="text" th:field="*{nome}" required/>
+
+    <label for="">Login:</label>
+    <input type="text" th:field="*{login}" required/>
+
+    <label for="">Senha:</label>
+    <input type="password" th:field="*{senha}" required/>
+
+    <label for="">Administrador:</label>
+    <input type="checkbox" th:field="*{administrador}"/>
+
+    <button type="submit">Salvar</button>
+</form>
+</body>
+</html>
