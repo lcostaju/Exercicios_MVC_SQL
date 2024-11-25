@@ -8,10 +8,10 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.edu.iftm.tspi.pvmc</groupId>
-	<artifactId>sistema_usuarios</artifactId>
+	<groupId>br.edu.iftm.tspi.pmvc</groupId>
+	<artifactId>thymeleaf</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sistema_usuarios</name>
+	<name>thymeleaf</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

@@ -8,10 +8,10 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.edu.iftm.tspi.pvmc</groupId>
+	<groupId>br.edu.iftm.tspi.pmvc</groupId>
 	<artifactId>sistema_usuarios</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sistema_usuarios</name>
+	<name>sistema_usuarios_1</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>22</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

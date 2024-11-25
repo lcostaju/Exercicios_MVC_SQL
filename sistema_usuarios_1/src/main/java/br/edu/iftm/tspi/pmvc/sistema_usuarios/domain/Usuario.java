@@ -1,4 +1,4 @@
-package main.java.br.edu.iftm.tspi.pmvc.sistema_usuarios.domain;
+package br.edu.iftm.tspi.pmvc.sistema_usuarios.domain;
 
 public class Usuario {
     private String login;

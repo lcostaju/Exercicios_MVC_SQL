@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SistemaUsuariosApplication",
+            "request": "launch",
+            "mainClass": "br.edu.iftm.tspi.pvmc.sistema_usuarios.SistemaUsuariosApplication",
+            "projectName": "sistema_usuarios"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-HelloWorldApplication<hello_world>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

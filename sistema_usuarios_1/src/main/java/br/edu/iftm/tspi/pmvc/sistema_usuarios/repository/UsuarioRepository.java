@@ -1,9 +1,9 @@
-package main.java.br.edu.iftm.tspi.pmvc.sistema_usuarios.repository;
+package br.edu.iftm.tspi.pmvc.sistema_usuarios.repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.br.edu.iftm.tspi.pmvc.sistema_usuarios.domain.Usuario;
+import br.edu.iftm.tspi.pmvc.sistema_usuarios.domain.Usuario;
 
 public class UsuarioRepository {
 
