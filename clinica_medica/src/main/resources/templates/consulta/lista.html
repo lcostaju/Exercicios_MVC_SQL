@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+    <h1>Lista de Consultas</h1>
+    <div th:if="${mensagem}" class="mensagem-servidor">
+        <p th:text="${mensagem}"></p>
+    </div>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Medico</th>
+            <th>Data</th>
+            <th>Observações</th>
+            <th>Tipo</th>
+            <th>Paciente</th>
+            <th>Ações</th>
+        </tr>
+        <tr th:each="consulta : ${consultas}">
+            <td th:text="${consulta.codConsulta}"></td>
+            <td th:text="${consulta.nomeMedico}"></td>
+            <td th:text="${consulta.dataConsulta}"></td>
+            <td th:text="${consulta.observacoes}"></td>
+            <td th:text="${consulta.tipoConsulta}"></td>
+            <td th:text="${consulta.nomePaciente}"></td>
+            <td>
+                <a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${consulta.codConsulta})}" class="btn btn-edit">Editar</a>
+                                                
+                        <form th:action="@{/consulta/excluir/{codConsulta}(codConsulta=${consulta.codConsulta})}" method="post" 
+                           th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+            </td>
+        </tr>
+        <a href="#" th:href="@{/consulta/novo}" class="btn">Adicionar Nova Consulta</a>
+    </div>
+</body>
+</html>
