@@ -2,6 +2,7 @@ package br.edu.iftm.tspi.pmvc.clinica_medica.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
+import br.edu.iftm.tspi.pmvc.clinica_medica.domain.PedidoExame;
 import br.edu.iftm.tspi.pmvc.clinica_medica.repository.ConsultRepositoy;
+import br.edu.iftm.tspi.pmvc.clinica_medica.repository.PedidoExameRepository;
+
 import org.springframework.ui.Model;
 
 @Controller
@@ -19,6 +23,14 @@ import org.springframework.ui.Model;
 public class ConsultaController {
     
     private final ConsultRepositoy consultRepositoy;
+
+    public ConsultRepositoy getConsultRepositoy() {
+        return consultRepositoy;
+    }
+
+
+    @Autowired
+    private PedidoExameController pedidoExameController;
 
     public static final String URL_LISTA = "consulta/lista";
     public static final String URL_FORM = "consulta/form";
@@ -47,7 +59,7 @@ public class ConsultaController {
 
     @PostMapping("/novo")
     public String salvar(@ModelAttribute("consulta") Consulta consulta, RedirectAttributes redirectAttributes) {
-        consultRepositoy.novaConsulta(consulta);
+        ConsultRepositoy.novaConsulta(consulta);
         redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, consulta.getCodConsulta()+ " salva com sucesso");
         return URL_REDIRECT_LISTA; 
     }
@@ -55,12 +67,18 @@ public class ConsultaController {
 
     @GetMapping("/editar/{codConsulta}")
     public String abrirFormEditar(@PathVariable("codConsulta") Integer codConsulta, Model model, RedirectAttributes redirectAttributes) {
-        Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);         
+        
+        Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);   
+        //
+        
+        List<PedidoExame> pedidosExame = new PedidoExameRepository().listarPorConsulta(consultaBusca);
+        //      
         if (consultaBusca == null) {
             redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
             return URL_REDIRECT_LISTA;
         } else {
             model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
+            model.addAttribute("pedidosExame", pedidosExame);
             return URL_FORM; 
         }        
     }

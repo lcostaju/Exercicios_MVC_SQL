@@ -34,16 +34,34 @@
             <input type="text" id="nomePaciente" th:field="*{nomePaciente}" />
 
             <button type="submit" th:text="${consulta.codConsulta != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
-
-
-
             </form>
-            <a th:href="@{/consulta}" class="btn">Voltar à Lista de Usuários</a>
+            <a th:href="@{/consulta}" class="btn">Voltar à Lista de Consultas</a>
             
-            <!-- <form th:action="@{/consulta/salvar/{codConsulta}(codConsulta=${consulta.codConsulta})}" th:object="${consulta}" method="post">
-            <button type="submit" class="btn btn-delete">Save</button>
-        </form> -->
+        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.codConsulta})}" class="btn">Adcionar Pedido de exame</a>
 
+    </div>
+    <div>
+        <h1>Lista de Pedidos de exame</h1>
+        <table>
+            <tr>
+                <th>Codigo do Exame</th>
+                <th>Nome do Exame</th>
+                <th>Data da Solicitacao</th>
+                <th>Consulta</th>
+                <th>Opções</th>
+            </tr>
+            <tr th:each="pedidoExame : ${pedidosExame}">
+                <td th:text="${pedidoExame.codExame}"></td>
+                <td th:text="${pedidoExame.nomeExame}"></td>
+                <td th:text="${pedidoExame.dataSolicitacao}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}"
+                        class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a></td>
+                <td>
+                    <a>Editar</a>
+                    <a>Excluir</a>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 

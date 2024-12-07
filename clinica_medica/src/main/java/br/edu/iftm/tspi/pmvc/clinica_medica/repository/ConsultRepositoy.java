@@ -31,6 +31,7 @@ public class ConsultRepositoy {
     }
 
     private final List<Consulta> consultas;
+    public static List<Consulta> consultas2 = new ArrayList<>();
 
     public ConsultRepositoy() {
         this.consultas = new ArrayList<>();
@@ -39,7 +40,7 @@ public class ConsultRepositoy {
     }
 
     public List<Consulta> listar() {
-        return this.consultas;
+        return consultas2;
     }
 
     public List<Consulta> listarPorNomeMedico(String nomeMedico) {
@@ -54,18 +55,18 @@ public class ConsultRepositoy {
 
     public Consulta buscaPorCod(Integer codConsulta) {
         Consulta ConsultaBusca = new Consulta(codConsulta);        
-        int index = consultas.indexOf(ConsultaBusca);
+        int index = consultas2.indexOf(ConsultaBusca);
         if (index != -1) {
-            return consultas.get(index);
+            return consultas2.get(index);
         } else {
             return null; 
         }
     }
 
-    public void novaConsulta(Consulta consulta) {
-        int cod = (this.consultas.size()-1) + 1;
+    public static void novaConsulta(Consulta consulta) {
+        int cod = consultas2.size() + 1;
         consulta.setCodConsulta(cod);
-        this.consultas.add(consulta);
+        consultas2.add(consulta);
         //return this.consultas;
     }
 
@@ -75,9 +76,9 @@ public class ConsultRepositoy {
     }
 
     public boolean updateConsulta(Consulta consulta){
-        int index = consultas.indexOf(consulta);
+        int index = consultas2.indexOf(consulta);
         if (index != -1) {
-            consultas.set(index, consulta);
+            consultas2.set(index, consulta);
             return true;
         }
         return false;

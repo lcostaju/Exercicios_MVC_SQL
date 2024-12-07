@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <h1>Lista de Pedidos de exame</h1>
+
+        <table>
+            <tr>
+                <th>Codigo do Exame</th>
+                <th>Nome do Exame</th>
+                <th>Data da Solicitacao</th>
+                <th>Consulta</th>
+                <th>Opções</th>
+            </tr>
+            <tr th:each="pedidoExame : ${pedidosExame}">
+                <td th:text="${pedidoExame.codExame}"></td>
+                <td th:text="${pedidoExame.nomeExame}"></td>
+                <td th:text="${pedidoExame.dataSolicitacao}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}" class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a></td>
+                <td>
+                <!-- <td th:text="${pedidoExame.consulta.codConsulta}"></td> -->
+                <td>
+                    <a>Editar</a>
+                    <a>Excluir</a>
+                </td>
+            </tr>
+    </div>
+</body>
+
+</html>

@@ -11,12 +11,21 @@ public class PedidoExame {
     public PedidoExame() {
     }
 
-    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao, Date dataResultado, String resultado,
-            Consulta consulta) {
+    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao,Consulta consulta) {
         this.codExame = codExame;
         this.nomeExame = nomeExame;
         this.dataSolicitacao = dataSolicitacao;
         this.consulta = consulta;
+    }
+
+    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao) {
+        this.codExame = codExame;
+        this.nomeExame = nomeExame;
+        this.dataSolicitacao = dataSolicitacao;
+    }
+    public PedidoExame(Consulta consulta2) {
+        //TODO Auto-generated constructor stub
+        consulta = consulta2;
     }
 
     public Integer getCodExame() {

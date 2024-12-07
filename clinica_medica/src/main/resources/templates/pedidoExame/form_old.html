@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Pedido de Exame</h1>
+    <form th:action= "@{/pedidoexame/criar/{consulta}(consulta=${consulta})}"
+    th:object="${pedidoExame}" method="post">
+        <label for="codExame">Código do Exame</label>
+        <input type="text" id="codExame" th:field="*{codExame}">
+        <label for="nomeExame">Nome do Exame</label>
+        <input type="text" id="nomeExame" th:field="*{nomeExame}">
+        <label for="dataSolicitacao">Data da Solicitação</label>
+        <input type="date" id="dataSolicitacao" th:field="*{dataSolicitacao}">
+        <!-- 
+        <input type="text" id="consulta" th:field="*{consulta}"> -->
+        <!-- Hidden input for consulta -->
+        <!-- <label for="consulta">Consulta</label>
+        <input type="text" th:value="${consulta}"> -->
+        <button type="submit" th:text="${pedidoExame.codExame != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+    </form>
+</body>
+</html>

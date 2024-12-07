@@ -46,6 +46,16 @@
             "projectName": "aula20241104",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ClinicaMedicaApplication<clinica_medica>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.edu.iftm.tspi.pmvc.clinica_medica.ClinicaMedicaApplication",
+            "projectName": "clinica_medica",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
