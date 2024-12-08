@@ -13,7 +13,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.PedidoExame;
+import br.edu.iftm.tspi.pmvc.clinica_medica.domain.RegistroPagamento;
 import br.edu.iftm.tspi.pmvc.clinica_medica.repository.ConsultRepositoy;
+import br.edu.iftm.tspi.pmvc.clinica_medica.repository.PagamentoRepository;
 import br.edu.iftm.tspi.pmvc.clinica_medica.repository.PedidoExameRepository;
 
 import org.springframework.ui.Model;
@@ -72,6 +74,7 @@ public class ConsultaController {
         //
         
         List<PedidoExame> pedidosExame = new PedidoExameRepository().listarPorConsulta(consultaBusca);
+        List<RegistroPagamento> pagamentos = new PagamentoRepository().listarPorConsulta(consultaBusca);
         //      
         if (consultaBusca == null) {
             redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
@@ -79,6 +82,7 @@ public class ConsultaController {
         } else {
             model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
             model.addAttribute("pedidosExame", pedidosExame);
+            model.addAttribute("pagamentos", pagamentos);
             return URL_FORM; 
         }        
     }

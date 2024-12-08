@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <title>Lista pagamentos</title>
+</head>
+<body>
+    <div>
+        <h1>Lista de pagamentos</h1>
+        <table>
+            <tr>
+                <th>Codigo do Pagamento</th>
+                <th>Valor</th>
+                <th>Tipo pagamento</th>
+                <th>Data do Pagamento</th>
+                <th>Consulta</th>
+                <th>Opções</th>
+            </tr>
+            <tr th:each="pagamento : ${pagamentos}">
+                <td th:text="${pagamento.codPagamento}"></td>
+                <td th:text="${pagamento.tipoPagamento}"></td>
+                <td th:text="${pagamento.valorPagamento}"></td>
+                <td th:text="${pagamento.dataPagamento}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pagamento.consulta.codConsulta})}" class="btn btn-edit" th:text="${pagamento.consulta.codConsulta}"></a></td>
+                <td>
+                    <a th:href="@{/pagamento/editar/{codPagamento}(codPagamento=${pagamento.codPagamento})}" class="btn btn-edit">Editar</a>
+                    <form th:action="@{/pagamento/delete/{codPagamento}(codPagamento=${pagamento.codPagamento})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <a th:href="@{/index.html}" class="btn btn-home">Voltar para home</a>
+    </div>
+</body>
+</html>

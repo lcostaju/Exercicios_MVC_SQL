@@ -4,39 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <title>Formulário consulta</title>
 </head>
 
 <body>
     <div th:if="${mensagem}" class="mensagem-servidor">
         <p th:text="${mensagem}"></p>
     </div>
-    <div>
-
+    <div class="container-form">
         <h1 th:text="${consulta.codConsulta != null ? 'Editar Consulta' : 'Nova Consulta'}">Formulário de Consulta</h1>
         <form
             th:action="@{${consulta.codConsulta != null ? '/consulta/editar/' + consulta.codConsulta : '/consulta/novo'}}"
             th:object="${consulta}" method="post">
 
-            <label for="codConsulta">codConsulta:</label>
-            <input type="text" th:field="*{codConsulta}" id="codConsulta" readonly/>
+            <label for="codConsulta" th:if="${consulta.codConsulta} != null">Código consulta:</label>
+            <input type="text" th:field="*{codConsulta}" id="codConsulta" th:if="${consulta.codConsulta} != null" readonly/>
 
-            <label for="nomeMedico">Nome do Médico</label>
+            <label for="nomeMedico">Nome do Médico:</label>
             <input type="text" id="nomeMedico" th:field="*{nomeMedico}" required/>
-            <label for="dataConsulta">Data da Consulta</label>
+            <label for="dataConsulta">Data da Consulta:</label>
             <input type="date" id="dataConsulta" th:field="*{dataConsulta}" required/>
-            <label for="observacoes">Observações</label>
+            <label for="observacoes">Observações:</label>
             <input type="text" id="observacoes" th:field="*{observacoes}" required/>
-            <label for="tipoConsulta">Tipo da Consulta</label>
+            <label for="tipoConsulta">Tipo da Consulta:</label>
             <input type="text" id="tipoConsulta" th:field="*{tipoConsulta}" required/>
-            <label for="nomePaciente">Nome do Paciente</label>
+            <label for="nomePaciente">Nome do Paciente:</label>
             <input type="text" id="nomePaciente" th:field="*{nomePaciente}" required/>
 
             <button type="submit" th:text="${consulta.codConsulta != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
             </form>
             <a th:href="@{/consulta}" class="btn">Voltar à Lista de Consultas</a>
             
-        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.codConsulta})}" th:if="${consulta.codConsulta} != null"class="btn">Adcionar Pedido de exame</a>
+        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.codConsulta})}" th:if="${consulta.codConsulta} != null" class="btn">Adcionar Pedido de exame</a>
+        <a th:href="@{/pagamento/novo/{consulta}(consulta=${consulta.codConsulta})}" th:if="${consulta.codConsulta} != null" class="btn">Adcionar Pagamento</a>
 
     </div>
     <div>
@@ -60,6 +61,35 @@
                     <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
                         method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
                         style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Excluir</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <h1>Lista de Pagamentos</h1>
+        <table>
+            <tr>
+                <th>Codigo do Pagamento</th>
+                <th>Valor</th>
+                <th>Tipo pagamento</th>
+                <th>Data do Pagamento</th>
+                <th>Consulta</th>
+                <th>Opções</th>
+            </tr>
+            <tr th:each="pagamento : ${pagamentos}">
+                <td th:text="${pagamento.codPagamento}"></td>
+                <td th:text="${pagamento.tipoPagamento}"></td>
+                <td th:text="${pagamento.valorPagamento}"></td>
+                <td th:text="${pagamento.dataPagamento}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pagamento.consulta.codConsulta})}"
+                        class="btn btn-edit" th:text="${pagamento.consulta.codConsulta}"></a></td>
+                <td>
+                    <a th:href="@{/pagamento/editar/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
+                        class="btn btn-edit">Editar</a>
+                    <form th:action="@{/pagamento/delete/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
+                        method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
                         <button type="submit" class="btn btn-delete">Excluir</button>
                 </td>
             </tr>

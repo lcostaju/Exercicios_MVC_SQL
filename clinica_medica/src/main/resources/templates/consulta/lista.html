@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
     <title>Document</title>
 </head>
 <body>
@@ -11,6 +12,7 @@
     <div th:if="${mensagem}" class="mensagem-servidor">
         <p th:text="${mensagem}"></p>
     </div>
+    <a href="#" th:href="@{/consulta/novo}" class="btn">Adicionar Nova Consulta</a>
     <table>
         <tr>
             <th>Id</th>
@@ -32,11 +34,12 @@
                 <a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${consulta.codConsulta})}" class="btn btn-edit">Editar</a>
                                                 
                         <form th:action="@{/consulta/excluir/{codConsulta}(codConsulta=${consulta.codConsulta})}" method="post" 
-                           th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                        th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
                             <button type="submit" class="btn btn-delete">Excluir</button>
             </td>
         </tr>
-        <a href="#" th:href="@{/consulta/novo}" class="btn">Adicionar Nova Consulta</a>
+    </table>    
+        <a th:href="@{/index.html}" class="btn btn-home">Voltar para home</a>
     </div>
 </body>
 </html>

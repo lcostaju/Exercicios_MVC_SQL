@@ -95,7 +95,7 @@ public String abrirFormEditar(@PathVariable Integer codPedidoExame, Model model,
         } else {
             redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, " Não foi possível atualizar "+pedidoExame.getCodExame());
         }        
-        return URL_REDIRECT_LISTA; 
+        return URL_REDIRECT_LISTA;
     }
 
 @PostMapping("/delete/{codPedidoExame}")

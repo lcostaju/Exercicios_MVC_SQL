@@ -20,6 +20,16 @@ public class RegistroPagamento {
         this.consulta = consulta;
     }
 
+    public RegistroPagamento(Consulta consulta2) {
+        //TODO Auto-generated constructor stub
+        this.consulta = consulta2;
+    }
+
+    public RegistroPagamento(Integer codPagamento2) {
+        //TODO Auto-generated constructor stub
+        this.codPagamento = codPagamento2;
+    }
+
     public Integer getCodPagamento() {
         return codPagamento;
     }

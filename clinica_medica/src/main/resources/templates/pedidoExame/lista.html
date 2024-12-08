@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
     <title>Document</title>
 </head>
 
@@ -23,8 +24,8 @@
                 <td th:text="${pedidoExame.codExame}"></td>
                 <td th:text="${pedidoExame.nomeExame}"></td>
                 <td th:text="${pedidoExame.dataSolicitacao}"></td>
-                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}" class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a></td>
-                <td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}" class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a>
+                </td>
                 <!-- <td th:text="${pedidoExame.consulta.codConsulta}"></td> -->
                 <td>
                     <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn btn-edit">Editar</a>
@@ -36,6 +37,7 @@
             </tr>
         </table>
         <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
+        <a th:href="@{/index.html}" class="btn btn-home">Voltar para home</a>
     </div>
 </body>
 

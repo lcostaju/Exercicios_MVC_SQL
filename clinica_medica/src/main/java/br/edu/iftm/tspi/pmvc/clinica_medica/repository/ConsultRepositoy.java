@@ -70,7 +70,7 @@ public class ConsultRepositoy {
 
     public static void novaConsulta(Consulta consulta) {
         //int cod = consultas2.size() + 1;
-        int cod = consultas2.get(consultas2.size()-1).getCodConsulta() + 1;
+        int cod = consultas2.size() > 0? consultas2.get(consultas2.size()-1).getCodConsulta() + 1:1;
         consulta.setCodConsulta(cod);
         consultas2.add(consulta);
         //return this.consultas;

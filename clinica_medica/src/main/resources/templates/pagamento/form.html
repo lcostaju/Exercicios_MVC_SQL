@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <title>Formulário de Pagamento</title>
+</head>
+<body>
+    <div class="container-form">
+        <h1>Formulário de Pagamento</h1>
+
+        <form th:action="@{${pagamento.codPagamento == null? '/pagamento/salvar' : '/pagamento/editar/' + pagamento.codPagamento}}" th:object="${pagamento}" method="post">
+            
+            <label for="codPagamento">Código do pagamento:</label>
+            <input type="text" id="codPagamento" th:field="*{codPagamento}" readonly/>
+
+            
+            <label for="tipoPagamento">Tipo de Pagamento:</label>
+            <input type="text" id="tipoPagamento" th:field="*{tipoPagamento}" placeholder="Digite o Tipo de Pagamento" required />
+
+            <label for="valorPagamento">Valor</label>
+            <input type="number" step="0.01" min="0" id="valorPagamento" th:field="*{valorPagamento}" required/>
+
+            
+            <label for="dataPagamento">Data do pagamento:</label>
+            <input type="date" id="dataPagamento" th:field="*{dataPagamento}" required/>
+
+            <!-- Campo Consulta (Somente Leitura) -->
+            <label for="consulta">Consulta:</label>
+            <input type="text" id="consulta" th:field="*{consulta.codConsulta}" readonly />
+
+            <button type="submit" th:text="${pagamento.codPagamento != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
+        <a th:href="@{/pagamento}" class="btn">Lista de pagamentos</a>
+    </div>
+</body>
+</html>
