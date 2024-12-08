@@ -28,6 +28,11 @@ public class PedidoExame {
         consulta = consulta2;
     }
 
+    public PedidoExame(Integer codPedidoExame) {
+        //TODO Auto-generated constructor stub
+        this.codExame = codPedidoExame;
+    }
+
     public Integer getCodExame() {
         return codExame;
     }

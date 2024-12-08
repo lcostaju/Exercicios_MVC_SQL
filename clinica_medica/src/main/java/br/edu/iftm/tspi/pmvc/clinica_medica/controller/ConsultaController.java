@@ -97,7 +97,7 @@ public class ConsultaController {
     @PostMapping(value = "/excluir/{codConsulta}")
     public String excluir(@PathVariable("codConsulta") Integer codConsulta, RedirectAttributes redirectAttributes) {
         consultRepositoy.deleteConsulta(codConsulta); 
-        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Usuário excluído com sucesso.");
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Consulta excluída com sucesso.");
         return URL_REDIRECT_LISTA; 
     }
 }

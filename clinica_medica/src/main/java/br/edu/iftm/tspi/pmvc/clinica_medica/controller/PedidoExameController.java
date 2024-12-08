@@ -16,6 +16,8 @@ import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.PedidoExame;
 import br.edu.iftm.tspi.pmvc.clinica_medica.repository.ConsultRepositoy;
 import br.edu.iftm.tspi.pmvc.clinica_medica.repository.PedidoExameRepository;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/pedidoexame")
@@ -47,15 +49,6 @@ public class PedidoExameController {
     }
 
 
-    // @GetMapping("/novo/{consulta}")
-    // public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
-    //     ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    //     Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
-    //     model.addAttribute(ATRIBUTO_OBJETO, new PedidoExame(consulta));
-    //     model.addAttribute("consulta", codConsulta);
-    //     return URL_FORM;
-    // }
-
     @GetMapping("/novo/{consulta}")
     public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
         ConsultRepositoy consultRepositoy = new ConsultRepositoy();
@@ -80,5 +73,38 @@ public String salvarPedidoExame(@ModelAttribute PedidoExame pedidoExame, Redirec
     pedidoRepositoy.novoPedidoExame(pedidoExame);
     return "redirect:/pedidoexame";
 }
+
+@GetMapping("/editar/{codPedidoExame}")
+public String abrirFormEditar(@PathVariable Integer codPedidoExame, Model model, RedirectAttributes redirectAttributes) {
+    PedidoExame pedidoExame = pedidoRepositoy.buscaPorCod(codPedidoExame);
+
+    if (pedidoExame == null) {
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codPedidoExame+" não encontrado.");
+        return URL_REDIRECT_LISTA;
+    } else {
+        model.addAttribute(ATRIBUTO_OBJETO,pedidoExame);
+        return URL_FORM; 
+    }    
+
+}
+
+@PostMapping("/editar/{codPedidoExame}")
+    public String atualizar(@PathVariable("codPedidoExame") Integer codPedidoExame, @ModelAttribute("codPedidoExame") PedidoExame pedidoExame, RedirectAttributes redirectAttributes) {
+        if (pedidoRepositoy.updatePedidoExame(pedidoExame)) {
+            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, pedidoExame.getCodExame()+ " atualizado com sucesso");
+        } else {
+            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, " Não foi possível atualizar "+pedidoExame.getCodExame());
+        }        
+        return URL_REDIRECT_LISTA; 
+    }
+
+@PostMapping("/delete/{codPedidoExame}")
+public String postMethodName(@PathVariable Integer codPedidoExame, RedirectAttributes redirectAttributes) {
+    pedidoRepositoy.deletePedidoExame(codPedidoExame);
+    redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Pedido de exame excluído com sucesso.");
+    
+    return URL_REDIRECT_LISTA;
+}
+    
 
 }

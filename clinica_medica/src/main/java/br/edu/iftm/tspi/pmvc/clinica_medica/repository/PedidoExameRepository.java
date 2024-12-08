@@ -30,16 +30,19 @@ public class PedidoExameRepository {
     }
 
     private final List<PedidoExame> pedidosExame;
-    private final ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    private final Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
+    private static ConsultRepositoy consultRepositoy = new ConsultRepositoy();
+    private static Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
     public static List<PedidoExame> pedidosExame2 = new ArrayList<>();
+
+    static{
+        pedidosExame2.add(new PedidoExame(1, "Hemograma", stringToDate("03/12/2024"), consultaInicial));
+    }
     
 
     public PedidoExameRepository() {
         this.pedidosExame = new ArrayList<>();
         this.pedidosExame.add(
                 new PedidoExame(99999, "Hemograma", stringToDate("03/12/2024"), consultaInicial));
-                      
     }
 
     public List<PedidoExame> listar() {
@@ -68,9 +71,34 @@ public class PedidoExameRepository {
     }
 
     public void novoPedidoExame(PedidoExame pedidoExame) {
-        int cod = pedidosExame2.size()+ 1;
+        //int cod = pedidosExame2.size()+ 1;
+        int cod = pedidosExame2.get(pedidosExame2.size()-1).getCodExame() + 1;
         pedidoExame.setCodExame(cod);
         pedidosExame2.add(pedidoExame);
         //return this.consultas;
+    }
+
+    public boolean updatePedidoExame(PedidoExame pedidoExame) {
+        int index = pedidosExame2.indexOf(pedidoExame);
+        if (index != -1) {
+            pedidosExame2.set(index, pedidoExame);
+            return true;
+        }
+        return false;
+    }
+
+    public PedidoExame buscaPorCod(Integer codPedidoExame) {
+        PedidoExame pedidoBusca = new PedidoExame(codPedidoExame);        
+        int index = pedidosExame2.indexOf(pedidoBusca);
+        if (index != -1) {
+            return pedidosExame2.get(index);
+        } else {
+            return null; 
+        }
+    }
+
+    public boolean deletePedidoExame(Integer codPedidoExame) {
+        PedidoExame pedidoExame = new PedidoExame(codPedidoExame);
+        return pedidosExame2.remove(pedidoExame);
     }
 }

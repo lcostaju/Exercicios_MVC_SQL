@@ -32,6 +32,11 @@ public class ConsultRepositoy {
 
     private final List<Consulta> consultas;
     public static List<Consulta> consultas2 = new ArrayList<>();
+    public static Consulta consultaInicial = new Consulta(1, "Dr. João", stringToDate("03/12/2024"), "Consulta de rotina", "Consulta", "Maria");
+
+    static {
+        consultas2.add(consultaInicial);
+    }
 
     public ConsultRepositoy() {
         this.consultas = new ArrayList<>();
@@ -64,7 +69,8 @@ public class ConsultRepositoy {
     }
 
     public static void novaConsulta(Consulta consulta) {
-        int cod = consultas2.size() + 1;
+        //int cod = consultas2.size() + 1;
+        int cod = consultas2.get(consultas2.size()-1).getCodConsulta() + 1;
         consulta.setCodConsulta(cod);
         consultas2.add(consulta);
         //return this.consultas;
@@ -72,7 +78,7 @@ public class ConsultRepositoy {
 
     public boolean deleteConsulta(Integer codConsulta) {
         Consulta consulta = new Consulta(codConsulta);
-        return consultas.remove(consulta);
+        return consultas2.remove(consulta);
     }
 
     public boolean updateConsulta(Consulta consulta){

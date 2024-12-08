@@ -19,25 +19,24 @@
             th:object="${consulta}" method="post">
 
             <label for="codConsulta">codConsulta:</label>
-            <input type="text" th:field="*{codConsulta}" id="codConsulta" placeholder="Digite o codConsulta"
-                th:readonly="${consulta.codConsulta != null}" />
+            <input type="text" th:field="*{codConsulta}" id="codConsulta" readonly/>
 
             <label for="nomeMedico">Nome do Médico</label>
-            <input type="text" id="nomeMedico" th:field="*{nomeMedico}" />
+            <input type="text" id="nomeMedico" th:field="*{nomeMedico}" required/>
             <label for="dataConsulta">Data da Consulta</label>
-            <input type="date" id="dataConsulta" th:field="*{dataConsulta}" />
+            <input type="date" id="dataConsulta" th:field="*{dataConsulta}" required/>
             <label for="observacoes">Observações</label>
-            <input type="text" id="observacoes" th:field="*{observacoes}" />
+            <input type="text" id="observacoes" th:field="*{observacoes}" required/>
             <label for="tipoConsulta">Tipo da Consulta</label>
-            <input type="text" id="tipoConsulta" th:field="*{tipoConsulta}" />
+            <input type="text" id="tipoConsulta" th:field="*{tipoConsulta}" required/>
             <label for="nomePaciente">Nome do Paciente</label>
-            <input type="text" id="nomePaciente" th:field="*{nomePaciente}" />
+            <input type="text" id="nomePaciente" th:field="*{nomePaciente}" required/>
 
             <button type="submit" th:text="${consulta.codConsulta != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
             </form>
             <a th:href="@{/consulta}" class="btn">Voltar à Lista de Consultas</a>
             
-        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.codConsulta})}" class="btn">Adcionar Pedido de exame</a>
+        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.codConsulta})}" th:if="${consulta.codConsulta} != null"class="btn">Adcionar Pedido de exame</a>
 
     </div>
     <div>
@@ -57,8 +56,11 @@
                 <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}"
                         class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a></td>
                 <td>
-                    <a>Editar</a>
-                    <a>Excluir</a>
+                    <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn btn-edit">Editar</a>
+                    <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
+                        method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Excluir</button>
                 </td>
             </tr>
         </table>

@@ -27,10 +27,15 @@
                 <td>
                 <!-- <td th:text="${pedidoExame.consulta.codConsulta}"></td> -->
                 <td>
-                    <a>Editar</a>
-                    <a>Excluir</a>
+                    <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn btn-edit">Editar</a>
+                    <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
+                        method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn-delete">Excluir</button>
                 </td>
             </tr>
+        </table>
+        <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
     </div>
 </body>
 

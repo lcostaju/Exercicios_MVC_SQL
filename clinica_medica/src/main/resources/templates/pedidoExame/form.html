@@ -14,27 +14,28 @@
     <div>
         <h1>Formulário de Pedido de Exame</h1>
 
-        <form th:action="@{/pedidoexame/salvar}" th:object="${pedidoExame}" method="post">
+        <form th:action="@{${pedidoExame.codExame == null? '/pedidoexame/salvar' : '/pedidoexame/editar/' + pedidoExame.codExame}}" th:object="${pedidoExame}" method="post">
             <!-- Campo Código do Exame -->
             <label for="codExame">Código do Exame:</label>
-            <input type="text" id="codExame" th:field="*{codExame}" placeholder="Digite o código do exame" />
+            <input type="text" id="codExame" th:field="*{codExame}" readonly/>
 
             <!-- Campo Nome do Exame -->
             <label for="nomeExame">Nome do Exame:</label>
-            <input type="text" id="nomeExame" th:field="*{nomeExame}" placeholder="Digite o nome do exame" />
+            <input type="text" id="nomeExame" th:field="*{nomeExame}" placeholder="Digite o nome do exame" required />
 
             <!-- Campo Data da Solicitação -->
             <label for="dataSolicitacao">Data da Solicitação:</label>
-            <input type="date" id="dataSolicitacao" th:field="*{dataSolicitacao}" />
+            <input type="date" id="dataSolicitacao" th:field="*{dataSolicitacao}" required/>
 
             <!-- Campo Consulta (Somente Leitura) -->
             <label for="consulta">Consulta:</label>
             <input type="text" id="consulta" th:field="*{consulta.codConsulta}" readonly />
 
-            <button type="submit">Salvar Pedido de Exame</button>
+            <button type="submit" th:text="${pedidoExame.codExame != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
         </form>
 
         <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
+        <a th:href="@{/pedidoexame}" class="btn">Lista de pedidos de exame</a>
     </div>
 </body>
 
