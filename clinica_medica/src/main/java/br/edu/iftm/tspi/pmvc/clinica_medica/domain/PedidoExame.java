@@ -7,21 +7,27 @@ public class PedidoExame {
     private String nomeExame;
     private Date dataSolicitacao;
     private Consulta consulta;
+    private String observacao;
+    private String laboratorio;
 
     public PedidoExame() {
     }
 
-    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao,Consulta consulta) {
+    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao,Consulta consulta, String observacao, String laboratorio) {
         this.codExame = codExame;
         this.nomeExame = nomeExame;
         this.dataSolicitacao = dataSolicitacao;
         this.consulta = consulta;
+        this.observacao = observacao;
+        this.laboratorio = laboratorio;
     }
 
-    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao) {
+    public PedidoExame(Integer codExame, String nomeExame, Date dataSolicitacao,String observacao, String laboratorio) {
         this.codExame = codExame;
         this.nomeExame = nomeExame;
         this.dataSolicitacao = dataSolicitacao;
+        this.observacao = observacao;
+        this.laboratorio = laboratorio;
     }
     public PedidoExame(Consulta consulta2) {
         //TODO Auto-generated constructor stub
@@ -88,6 +94,22 @@ public class PedidoExame {
 
     public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public String getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(String laboratorio) {
+        this.laboratorio = laboratorio;
     }
 
     

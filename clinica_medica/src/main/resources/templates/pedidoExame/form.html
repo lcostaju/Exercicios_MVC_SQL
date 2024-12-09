@@ -28,9 +28,17 @@
             <label for="dataSolicitacao">Data da Solicitação:</label>
             <input type="date" id="dataSolicitacao" th:field="*{dataSolicitacao}" required/>
 
+            
+
             <!-- Campo Consulta (Somente Leitura) -->
             <label for="consulta">Consulta:</label>
             <input type="text" id="consulta" th:field="*{consulta.codConsulta}" readonly />
+
+            <label for="obs">Observações</label>
+            <input type="text" id="obs" th:field="*{observacao}" required/>
+
+            <label for="lab">Laboratório</label>
+            <input type="text" id="lab" th:field="*{laboratorio}" required/>
 
             <button type="submit" th:text="${pedidoExame.codExame != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
         </form>

@@ -40,7 +40,7 @@
         <a th:href="@{/pagamento/novo/{consulta}(consulta=${consulta.codConsulta})}" th:if="${consulta.codConsulta} != null" class="btn">Adcionar Pagamento</a>
 
     </div>
-    <div>
+    <div th:if="${consulta.codConsulta} != null">
         <h1>Lista de Pedidos de exame</h1>
         <table>
             <tr>
@@ -48,6 +48,8 @@
                 <th>Nome do Exame</th>
                 <th>Data da Solicitacao</th>
                 <th>Consulta</th>
+                <th>Observações</th>
+                <th>Laboratório</th>
                 <th>Opções</th>
             </tr>
             <tr th:each="pedidoExame : ${pedidosExame}">
@@ -55,7 +57,10 @@
                 <td th:text="${pedidoExame.nomeExame}"></td>
                 <td th:text="${pedidoExame.dataSolicitacao}"></td>
                 <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}"
-                        class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a></td>
+                        class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a>
+                </td>
+                <td th:text="${pedidoExame.observacao}"></td>
+                <td th:text="${pedidoExame.laboratorio}"></td>
                 <td>
                     <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn btn-edit">Editar</a>
                     <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
@@ -67,15 +72,16 @@
         </table>
     </div>
 
-    <div>
+    <div th:if="${consulta.codConsulta} != null">
         <h1>Lista de Pagamentos</h1>
         <table>
             <tr>
                 <th>Codigo do Pagamento</th>
-                <th>Valor</th>
                 <th>Tipo pagamento</th>
+                <th>Valor</th>
                 <th>Data do Pagamento</th>
                 <th>Consulta</th>
+                <th>Observações</th>
                 <th>Opções</th>
             </tr>
             <tr th:each="pagamento : ${pagamentos}">
@@ -84,7 +90,9 @@
                 <td th:text="${pagamento.valorPagamento}"></td>
                 <td th:text="${pagamento.dataPagamento}"></td>
                 <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pagamento.consulta.codConsulta})}"
-                        class="btn btn-edit" th:text="${pagamento.consulta.codConsulta}"></a></td>
+                        class="btn btn-edit" th:text="${pagamento.consulta.codConsulta}"></a>
+                </td>
+                <td th:text="${pagamento.observacao}"></td>
                 <td>
                     <a th:href="@{/pagamento/editar/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
                         class="btn btn-edit">Editar</a>

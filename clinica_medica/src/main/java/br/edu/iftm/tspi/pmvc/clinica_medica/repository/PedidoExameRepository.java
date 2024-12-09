@@ -35,14 +35,14 @@ public class PedidoExameRepository {
     public static List<PedidoExame> pedidosExame2 = new ArrayList<>();
 
     static{
-        pedidosExame2.add(new PedidoExame(1, "Hemograma", stringToDate("03/12/2024"), consultaInicial));
+        pedidosExame2.add(new PedidoExame(1, "Hemograma", stringToDate("03/12/2024"), consultaInicial, "Observação", "Laboratório"));
     }
     
 
     public PedidoExameRepository() {
         this.pedidosExame = new ArrayList<>();
         this.pedidosExame.add(
-                new PedidoExame(99999, "Hemograma", stringToDate("03/12/2024"), consultaInicial));
+                new PedidoExame(99999, "Hemograma", stringToDate("03/12/2024"), consultaInicial, "Observação", "Laboratório"));
     }
 
     public List<PedidoExame> listar() {

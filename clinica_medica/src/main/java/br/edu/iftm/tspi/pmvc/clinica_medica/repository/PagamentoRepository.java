@@ -36,13 +36,13 @@ public class PagamentoRepository {
     public static List<RegistroPagamento> pagamentos2 = new ArrayList<>();
 
     static{
-        pagamentos2.add(new RegistroPagamento(1,"Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial));
+        pagamentos2.add(new RegistroPagamento(1,"Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial, "observations"));
     }
     
 
     public PagamentoRepository() {
         this.pagamentos = new ArrayList<>();
-        this.pagamentos.add(new RegistroPagamento(99999, "Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial));
+        this.pagamentos.add(new RegistroPagamento(99999, "Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial, "observations"));
     }
 
     public List<RegistroPagamento> listar() {

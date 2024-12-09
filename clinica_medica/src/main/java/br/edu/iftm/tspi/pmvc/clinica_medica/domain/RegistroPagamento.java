@@ -8,16 +8,18 @@ public class RegistroPagamento {
     private Double valorPagamento;
     private Date dataPagamento;
     private Consulta consulta;
+    private String observacao;
 
     public RegistroPagamento() {
     }
 
-    public RegistroPagamento(Integer codPagamento, String tipoPagamento, Double valorPagamento, Date dataPagamento, Consulta consulta) {
+    public RegistroPagamento(Integer codPagamento, String tipoPagamento, Double valorPagamento, Date dataPagamento, Consulta consulta, String observacao) {
         this.codPagamento = codPagamento;
         this.tipoPagamento = tipoPagamento;
         this.valorPagamento = valorPagamento;
         this.dataPagamento = dataPagamento;
         this.consulta = consulta;
+        this.observacao = observacao;
     }
 
     public RegistroPagamento(Consulta consulta2) {
@@ -93,6 +95,14 @@ public class RegistroPagamento {
 
     public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
     

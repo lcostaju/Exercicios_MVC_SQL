@@ -18,6 +18,8 @@
                 <th>Nome do Exame</th>
                 <th>Data da Solicitacao</th>
                 <th>Consulta</th>
+                <th>Observações</th>
+                <th>Laboratório</th>
                 <th>Opções</th>
             </tr>
             <tr th:each="pedidoExame : ${pedidosExame}">
@@ -27,6 +29,8 @@
                 <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.codConsulta})}" class="btn btn-edit" th:text="${pedidoExame.consulta.codConsulta}"></a>
                 </td>
                 <!-- <td th:text="${pedidoExame.consulta.codConsulta}"></td> -->
+                <td th:text="${pedidoExame.observacao}"></td>
+                <td th:text="${pedidoExame.laboratorio}"></td>
                 <td>
                     <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn btn-edit">Editar</a>
                     <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
