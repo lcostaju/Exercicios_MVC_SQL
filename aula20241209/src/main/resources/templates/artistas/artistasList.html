@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de artistas</title>
+</head>
+<body>
+    <div>
+        <h1>Lista de artistas</h1>
+        <table>
+            <tr>
+                <th>Código artista</th>
+                <th>Nome</th>
+            </tr>
+            <tr th:each="artista : ${artistas}">
+                <td th:text="${artista.codigo}"></td>
+                <td th:text="${artista.nome}"></td>
+            </tr>
+        </table>
+        <a href="#" th:href = "@{/artista/novo}">Adcionar artista</a>
+    </div>
+</body>
+</html>

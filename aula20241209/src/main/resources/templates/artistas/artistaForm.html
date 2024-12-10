@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+</head>
+<body>
+    <div>
+        <h1>Formulário</h1>
+        <form action="#" th:action="@{/artistas/save}" th:object="${artista}" method="post">
+            <input type="hidden" th:field="*{codigo}" />
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" />
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+</body>
+</html>
