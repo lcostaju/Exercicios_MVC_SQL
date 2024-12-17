@@ -8,14 +8,23 @@
 <body>
     <div>
         <h1>Lista de artistas</h1>
+        <form  th:action="@{/artistas/buscar}" method="get">
+            <input type="text" name="nome" placeholder="Buscar por nome" required />
+            <button type="submit" class="btn">Buscar</button>
+        </form>
         <table>
             <tr>
                 <th>Código artista</th>
                 <th>Nome</th>
+                <th>Ações</th>
             </tr>
             <tr th:each="artista : ${artistas}">
                 <td th:text="${artista.codigo}"></td>
                 <td th:text="${artista.nome}"></td>
+                <td>
+                    <a href="#" th:href = "@{/artistas/editar/{codigo}(codigo=${artista.codigo})}">Editar</a>
+                    <a href="#">Excluir</a>
+                </td>
             </tr>
         </table>
         <a href="#" th:href = "@{/artista/novo}">Adcionar artista</a>

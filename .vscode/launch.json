@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App"
+        },
+        {
+            "type": "java",
             "name": "SistemaUsuariosApplication",
             "request": "launch",
             "mainClass": "br.edu.iftm.tspi.pvmc.sistema_usuarios.SistemaUsuariosApplication",
@@ -54,6 +60,17 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "br.edu.iftm.tspi.pmvc.clinica_medica.ClinicaMedicaApplication",
             "projectName": "clinica_medica",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51700 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=clinica_medica"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Aula20241209Application<aula20241209>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.edu.iftm.pmvc.aula20241209.Aula20241209Application",
+            "projectName": "aula20241209",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -48,5 +49,30 @@ public class ArtistaController {
         
         return "redirect:/artista/listar";
     }
+
+    @GetMapping("/artistas/buscar")
+    public String buscar(Model model,@RequestParam("nome") String nome) {
+        List<Artista> artistas = repository.buscarPorNomer(nome);
+        model.addAttribute("artistas", artistas);
+        return "artistas/artistasList";
+    }
+
+    @GetMapping("/artistas/editar/{codigo}")
+    public String editar(@PathVariable Integer codigo, Model model) {
+        Artista artista = repository.buscarPorCod(codigo);
+        model.addAttribute("artista", artista);
+        return "artistas/artistaForm";
+    }
+
+    @PostMapping("/artistas/update")
+    public String update(@ModelAttribute Artista artista) {
+        //TODO: process POST request
+        repository.update(artista);
+        
+        return "redirect:/artista/listar";
+    }
+    
+    
+    
     
 }

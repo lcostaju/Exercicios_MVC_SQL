@@ -8,6 +8,10 @@
 <body>
     <div>
         <h1>Lista de artistas</h1>
+        <form  th:action="@{/artistas/buscar}" method="get">
+            <input type="text" name="nome" placeholder="Buscar por nome" required />
+            <button type="submit" class="btn">Buscar</button>
+        </form>
         <table>
             <tr>
                 <th>Código artista</th>

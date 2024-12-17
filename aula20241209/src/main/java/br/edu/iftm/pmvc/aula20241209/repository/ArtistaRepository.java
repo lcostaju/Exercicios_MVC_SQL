@@ -33,4 +33,36 @@ public class ArtistaRepository {
                 """;
         return conexao.update(sql, artista.getNome()) > 0;
     }
+
+    public List<Artista> buscarPorNomer(String nome) {
+        String sql = """
+                    select cod_artista as codigo,
+                        nom_artista as nome
+                    from tb_artista
+                    where lower(nom_artista) like ?
+                """;
+        return conexao.query(sql,new BeanPropertyRowMapper<>(Artista.class),
+        "%"+nome.toLowerCase()+"%");
+    }
+
+    public Artista buscarPorCod(Integer cod){
+        String sql = """
+                    select cod_artista as codigo,
+                        nom_artista as nome
+                    from tb_artista
+                    where cod_artista = ?
+                """;
+                return conexao.queryForObject(sql,new BeanPropertyRowMapper<>(Artista.class), cod);
+    }
+
+    public int update(Artista artista) {
+        // TODO Auto-generated method stub
+        String sql = """
+                UPDATE tb_artista
+SET nom_artista = ?
+WHERE cod_artista = ?
+                """;
+
+                return conexao.update(sql,artista.getNome(),artista.getCodigo());
+    }
 }
