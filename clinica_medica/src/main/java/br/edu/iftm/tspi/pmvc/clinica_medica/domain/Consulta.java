@@ -1,11 +1,12 @@
 package br.edu.iftm.tspi.pmvc.clinica_medica.domain;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Consulta{
     private Integer codConsulta;
     private String nomeMedico; //Será substituido no projeto pela classe medico
-    private Date dataConsulta;
+    private LocalDateTime dataConsulta;
     private String observacoes;
     private String tipoConsulta;
     private String nomePaciente; //sera substituido no projeto pela classe paciente
@@ -15,7 +16,7 @@ public class Consulta{
         //this.codConsulta = cont++;
     }
 
-    public Consulta(Integer codConsulta,String nomeMedico, Date dataConsulta, String observacoes, String tipoConsulta, String nomePaciente) {
+    public Consulta(Integer codConsulta,String nomeMedico, LocalDateTime dataConsulta, String observacoes, String tipoConsulta, String nomePaciente) {
         this.codConsulta = codConsulta;
         this.nomeMedico = nomeMedico;
         this.dataConsulta = dataConsulta;
@@ -24,7 +25,7 @@ public class Consulta{
         this.nomePaciente = nomePaciente;
     }
 
-    public Consulta(String nomeMedico, Date dataConsulta, String observacoes, String tipoConsulta) {
+    public Consulta(String nomeMedico, LocalDateTime dataConsulta, String observacoes, String tipoConsulta) {
         this.nomeMedico = nomeMedico;
         this.dataConsulta = dataConsulta;
         this.observacoes = observacoes;
@@ -52,11 +53,11 @@ public class Consulta{
         this.nomeMedico = nomeMedico;
     }
 
-    public Date getDataConsulta() {
+    public LocalDateTime getDataConsulta() {
         return dataConsulta;
     }
 
-    public void setDataConsulta(Date dataConsulta) {
+    public void setDataConsulta(LocalDateTime dataConsulta) {
         this.dataConsulta = dataConsulta;
     }
 

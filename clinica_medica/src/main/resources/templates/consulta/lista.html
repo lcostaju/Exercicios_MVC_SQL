@@ -26,7 +26,7 @@
         <tr th:each="consulta : ${consultas}">
             <td th:text="${consulta.codConsulta}"></td>
             <td th:text="${consulta.nomeMedico}"></td>
-            <td th:text="${consulta.dataConsulta}"></td>
+            <td th:text="${#temporals.format(consulta.dataConsulta, 'dd/MM/yyyy HH:mm')}"></td>
             <td th:text="${consulta.observacoes}"></td>
             <td th:text="${consulta.tipoConsulta}"></td>
             <td th:text="${consulta.nomePaciente}"></td>

@@ -8,12 +8,20 @@ import java.util.List;
 import java.sql.Date;
 //import java.util.Date;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
 
 @Repository
 public class ConsultRepositoy {
+
+    private final JdbcTemplate conexao;
+    
+    public ConsultRepositoy(JdbcTemplate conexao) {
+        this.conexao = conexao;
+        this.consultas = new ArrayList<>();
+    }
 
     public static Date stringToDate(String dataEmTexto) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -32,20 +40,25 @@ public class ConsultRepositoy {
 
     private final List<Consulta> consultas;
     public static List<Consulta> consultas2 = new ArrayList<>();
-    public static Consulta consultaInicial = new Consulta(1, "Dr. João", stringToDate("03/12/2024"), "Consulta de rotina", "Consulta", "Maria");
+    
 
-    static {
-        consultas2.add(consultaInicial);
-    }
+   
 
-    public ConsultRepositoy() {
-        this.consultas = new ArrayList<>();
-        this.consultas.add(
-                new Consulta(99999, "Dr. João", stringToDate("03/12/2024"), "Consulta de rotina", "Consulta", "Maria"));
-    }
+    // Removed default constructor to ensure 'conexao' is always initialized
 
     public List<Consulta> listar() {
-        return consultas2;
+        String sql = """
+                      select codConsulta as codConsulta,
+                             nomeMedico as nomeMedico,
+                             dataConsulta as dataConsulta,
+                            observacoes as observacoes,
+                            tipoConsulta as tipoConsulta,
+                            nomePaciente as nomePaciente
+                      from consulta;
+                      """;
+        return conexao.query(sql,
+                             new BeanPropertyRowMapper<>(Consulta.class)
+                            );
     }
 
     public List<Consulta> listarPorNomeMedico(String nomeMedico) {
@@ -68,12 +81,12 @@ public class ConsultRepositoy {
         }
     }
 
-    public static void novaConsulta(Consulta consulta) {
-        //int cod = consultas2.size() + 1;
-        int cod = consultas2.size() > 0? consultas2.get(consultas2.size()-1).getCodConsulta() + 1:1;
-        consulta.setCodConsulta(cod);
-        consultas2.add(consulta);
-        //return this.consultas;
+    public void novaConsulta(Consulta consulta) {
+        String sql = """
+                     insert into consulta (nomeMedico, dataConsulta, observacoes, tipoConsulta, nomePaciente)
+                     values (?, ?, ?, ?, ?);
+                     """;
+        conexao.update(sql, consulta.getNomeMedico(), consulta.getDataConsulta(), consulta.getObservacoes(), consulta.getTipoConsulta(), consulta.getNomePaciente());
     }
 
     public boolean deleteConsulta(Integer codConsulta) {

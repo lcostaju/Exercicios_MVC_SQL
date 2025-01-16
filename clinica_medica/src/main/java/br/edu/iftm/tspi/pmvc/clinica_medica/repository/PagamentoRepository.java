@@ -12,9 +12,21 @@ import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.PedidoExame;
 import br.edu.iftm.tspi.pmvc.clinica_medica.domain.RegistroPagamento;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 @Repository
 public class PagamentoRepository {
+
+    private final JdbcTemplate conexao;
     
+    public PagamentoRepository(JdbcTemplate conexao) {
+        this.conexao = conexao;
+        this.pagamentos = new ArrayList<>();
+    }
+    
+    
+
     public static Date stringToDate(String dataEmTexto) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -31,22 +43,25 @@ public class PagamentoRepository {
     }
 
     private final List<RegistroPagamento> pagamentos;
-    private static ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    private static Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
+    // private static ConsultRepositoy consultRepositoy = new ConsultRepositoy();
+    // private static Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
     public static List<RegistroPagamento> pagamentos2 = new ArrayList<>();
 
     static{
-        pagamentos2.add(new RegistroPagamento(1,"Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial, "observations"));
+        pagamentos2.add(new RegistroPagamento(1,"Dinheiro", 100.0, stringToDate("03/12/2024"), new Consulta(), "observations"));
     }
     
 
-    public PagamentoRepository() {
-        this.pagamentos = new ArrayList<>();
-        this.pagamentos.add(new RegistroPagamento(99999, "Dinheiro", 100.0, stringToDate("03/12/2024"), consultaInicial, "observations"));
-    }
 
     public List<RegistroPagamento> listar() {
-        return pagamentos2;
+        String sql = """
+                      select cod_artista as codigo,
+                             nom_artista as nome
+                      from tb_artista;
+                      """;
+        return conexao.query(sql,
+                             new BeanPropertyRowMapper<>(RegistroPagamento.class)
+                            );
     }
 
     public List<RegistroPagamento> listarPorConsulta(Consulta consulta) {

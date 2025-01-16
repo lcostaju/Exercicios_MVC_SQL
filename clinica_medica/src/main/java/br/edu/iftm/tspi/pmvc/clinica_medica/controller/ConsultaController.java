@@ -61,31 +61,31 @@ public class ConsultaController {
 
     @PostMapping("/novo")
     public String salvar(@ModelAttribute("consulta") Consulta consulta, RedirectAttributes redirectAttributes) {
-        ConsultRepositoy.novaConsulta(consulta);
+        consultRepositoy.novaConsulta(consulta);
         redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, consulta.getCodConsulta()+ " salva com sucesso");
         return URL_REDIRECT_LISTA; 
     }
 
 
-    @GetMapping("/editar/{codConsulta}")
-    public String abrirFormEditar(@PathVariable("codConsulta") Integer codConsulta, Model model, RedirectAttributes redirectAttributes) {
+    // @GetMapping("/editar/{codConsulta}")
+    // public String abrirFormEditar(@PathVariable("codConsulta") Integer codConsulta, Model model, RedirectAttributes redirectAttributes) {
         
-        Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);   
-        //
+    //     Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);   
+    //     //
         
-        List<PedidoExame> pedidosExame = new PedidoExameRepository().listarPorConsulta(consultaBusca);
-        List<RegistroPagamento> pagamentos = new PagamentoRepository().listarPorConsulta(consultaBusca);
-        //      
-        if (consultaBusca == null) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
-            return URL_REDIRECT_LISTA;
-        } else {
-            model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
-            model.addAttribute("pedidosExame", pedidosExame);
-            model.addAttribute("pagamentos", pagamentos);
-            return URL_FORM; 
-        }        
-    }
+    //     List<PedidoExame> pedidosExame = new PedidoExameRepository().listarPorConsulta(consultaBusca);
+    //     List<RegistroPagamento> pagamentos = new PagamentoRepository().listarPorConsulta(consultaBusca);
+    //     //      
+    //     if (consultaBusca == null) {
+    //         redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
+    //         return URL_REDIRECT_LISTA;
+    //     } else {
+    //         model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
+    //         model.addAttribute("pedidosExame", pedidosExame);
+    //         model.addAttribute("pagamentos", pagamentos);
+    //         return URL_FORM; 
+    //     }        
+    // }
 
     @PostMapping("/editar/{codConsulta}")
     public String atualizar(@PathVariable("codConsulta") String codConsulta, @ModelAttribute("codConsulta") Consulta consulta, RedirectAttributes redirectAttributes) {

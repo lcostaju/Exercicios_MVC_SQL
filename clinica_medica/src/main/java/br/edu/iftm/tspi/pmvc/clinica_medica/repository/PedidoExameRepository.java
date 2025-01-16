@@ -30,19 +30,19 @@ public class PedidoExameRepository {
     }
 
     private final List<PedidoExame> pedidosExame;
-    private static ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    private static Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
+    //private static ConsultRepositoy consultRepositoy = new ConsultRepositoy();
+    //private static Consulta consultaInicial = consultRepositoy.buscaPorCod(1);
     public static List<PedidoExame> pedidosExame2 = new ArrayList<>();
 
-    static{
-        pedidosExame2.add(new PedidoExame(1, "Hemograma", stringToDate("03/12/2024"), consultaInicial, "Observação", "Laboratório"));
-    }
+    // static{
+    //     pedidosExame2.add(new PedidoExame(1, "Hemograma", stringToDate("03/12/2024"), consultaInicial, "Observação", "Laboratório"));
+    // }
     
 
     public PedidoExameRepository() {
         this.pedidosExame = new ArrayList<>();
         this.pedidosExame.add(
-                new PedidoExame(99999, "Hemograma", stringToDate("03/12/2024"), consultaInicial, "Observação", "Laboratório"));
+                new PedidoExame(99999, "Hemograma", stringToDate("03/12/2024"), new Consulta(), "Observação", "Laboratório"));
     }
 
     public List<PedidoExame> listar() {

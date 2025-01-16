@@ -51,14 +51,14 @@ public class PagamentoController {
     }
 
 
-    @GetMapping("/novo/{consulta}")
-    public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
-        ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-        Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
-        model.addAttribute(ATRIBUTO_OBJETO, new RegistroPagamento(consulta));
-        model.addAttribute("consulta", codConsulta);
-        return URL_FORM;
-    }
+    // @GetMapping("/novo/{consulta}")
+    // public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
+    //     ConsultRepositoy consultRepositoy = new ConsultRepositoy();
+    //     Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
+    //     model.addAttribute(ATRIBUTO_OBJETO, new RegistroPagamento(consulta));
+    //     model.addAttribute("consulta", codConsulta);
+    //     return URL_FORM;
+    // }
 
 
 @PostMapping("/salvar")
