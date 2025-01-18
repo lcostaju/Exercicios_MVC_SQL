@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PedidoExameController {
     
     private final PedidoExameRepository pedidoRepositoy;
+    private final ConsultRepositoy consultRepositoy;
 
     public PedidoExameRepository getPedidoRepositoy() {
         return pedidoRepositoy;
@@ -37,8 +38,9 @@ public class PedidoExameController {
     public static final String ATRIBUTO_OBJETO = "pedidoExame";
     public static final String ATRIBUTO_LISTA = "pedidosExame";
 
-    public PedidoExameController(PedidoExameRepository pedidoRepositoy) {
+    public PedidoExameController(PedidoExameRepository pedidoRepositoy, ConsultRepositoy consultRepositoy) {
         this.pedidoRepositoy = pedidoRepositoy;
+        this.consultRepositoy = consultRepositoy;
     }
 
     @GetMapping
@@ -49,14 +51,13 @@ public class PedidoExameController {
     }
 
 
-    // @GetMapping("/novo/{consulta}")
-    // public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
-    //     ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    //     Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
-    //     model.addAttribute(ATRIBUTO_OBJETO, new PedidoExame(consulta));
-    //     model.addAttribute("consulta", codConsulta);
-    //     return URL_FORM;
-    // }
+    @GetMapping("/novo/{consulta}")
+    public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
+        Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
+        model.addAttribute(ATRIBUTO_OBJETO, new PedidoExame(consulta));
+        model.addAttribute("consulta", codConsulta);
+        return URL_FORM;
+    }
 
 
     @PostMapping("/criarexame/{consulta}")
@@ -90,11 +91,9 @@ public String abrirFormEditar(@PathVariable Integer codPedidoExame, Model model,
 
 @PostMapping("/editar/{codPedidoExame}")
     public String atualizar(@PathVariable("codPedidoExame") Integer codPedidoExame, @ModelAttribute("codPedidoExame") PedidoExame pedidoExame, RedirectAttributes redirectAttributes) {
-        if (pedidoRepositoy.updatePedidoExame(pedidoExame)) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, pedidoExame.getCodExame()+ " atualizado com sucesso");
-        } else {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, " Não foi possível atualizar "+pedidoExame.getCodExame());
-        }        
+       pedidoRepositoy.updatePedidoExame(pedidoExame);
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Atualizado com sucesso");
+              
         return URL_REDIRECT_LISTA;
     }
 

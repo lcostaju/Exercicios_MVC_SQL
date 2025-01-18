@@ -17,7 +17,7 @@ import br.edu.iftm.tspi.pmvc.clinica_medica.domain.Consulta;
 public class ConsultRepositoy {
 
     private final JdbcTemplate conexao;
-    
+
     public ConsultRepositoy(JdbcTemplate conexao) {
         this.conexao = conexao;
         this.consultas = new ArrayList<>();
@@ -40,25 +40,21 @@ public class ConsultRepositoy {
 
     private final List<Consulta> consultas;
     public static List<Consulta> consultas2 = new ArrayList<>();
-    
-
-   
 
     // Removed default constructor to ensure 'conexao' is always initialized
 
     public List<Consulta> listar() {
         String sql = """
-                      select codConsulta as codConsulta,
-                             nomeMedico as nomeMedico,
-                             dataConsulta as dataConsulta,
-                            observacoes as observacoes,
-                            tipoConsulta as tipoConsulta,
-                            nomePaciente as nomePaciente
-                      from consulta;
-                      """;
+                select codConsulta as codConsulta,
+                       nomeMedico as nomeMedico,
+                       dataConsulta as dataConsulta,
+                      observacoes as observacoes,
+                      tipoConsulta as tipoConsulta,
+                      nomePaciente as nomePaciente
+                from consulta;
+                """;
         return conexao.query(sql,
-                             new BeanPropertyRowMapper<>(Consulta.class)
-                            );
+                new BeanPropertyRowMapper<>(Consulta.class));
     }
 
     public List<Consulta> listarPorNomeMedico(String nomeMedico) {
@@ -72,37 +68,54 @@ public class ConsultRepositoy {
     }
 
     public Consulta buscaPorCod(Integer codConsulta) {
-        Consulta ConsultaBusca = new Consulta(codConsulta);        
-        int index = consultas2.indexOf(ConsultaBusca);
-        if (index != -1) {
-            return consultas2.get(index);
-        } else {
-            return null; 
-        }
+        String sql = """
+                select codConsulta as codConsulta,
+                       nomeMedico as nomeMedico,
+                       dataConsulta as dataConsulta,
+                      observacoes as observacoes,
+                      tipoConsulta as tipoConsulta,
+                      nomePaciente as nomePaciente
+                from consulta
+                where
+                  codConsulta = ?
+                """;
+        return conexao.queryForObject(sql,
+                new BeanPropertyRowMapper<>(Consulta.class), codConsulta);
     }
 
     public void novaConsulta(Consulta consulta) {
         String sql = """
-                     insert into consulta (nomeMedico, dataConsulta, observacoes, tipoConsulta, nomePaciente)
-                     values (?, ?, ?, ?, ?);
-                     """;
-        conexao.update(sql, consulta.getNomeMedico(), consulta.getDataConsulta(), consulta.getObservacoes(), consulta.getTipoConsulta(), consulta.getNomePaciente());
+                insert into consulta (nomeMedico, dataConsulta, observacoes, tipoConsulta, nomePaciente)
+                values (?, ?, ?, ?, ?);
+                """;
+        conexao.update(sql, consulta.getNomeMedico(), consulta.getDataConsulta(), consulta.getObservacoes(),
+                consulta.getTipoConsulta(), consulta.getNomePaciente());
     }
 
-    public boolean deleteConsulta(Integer codConsulta) {
-        Consulta consulta = new Consulta(codConsulta);
-        return consultas2.remove(consulta);
+    public void deleteConsulta(Integer codConsulta) {
+        String sql = """
+                delete from Consulta where codConsulta = ?
+                """;
+        conexao.update(sql, codConsulta);        
     }
 
-    public boolean updateConsulta(Consulta consulta){
-        int index = consultas2.indexOf(consulta);
-        if (index != -1) {
-            consultas2.set(index, consulta);
-            return true;
-        }
-        return false;
+    public void updateConsulta(Consulta consulta) {
+        // int index = consultas2.indexOf(consulta);
+        // if (index != -1) {
+        //     consultas2.set(index, consulta);
+        //     return true;
+        // }
+        // return false;
+        String sql = """
+                update Consulta
+                set nomeMedico = ?,
+                dataConsulta = ?,
+                observacoes = ?,
+                tipoConsulta = ?,
+                nomePaciente = ?
+                where codConsulta = ?
+                """;
+                conexao.update(sql, consulta.getNomeMedico(),consulta.getDataConsulta(),consulta.getObservacoes(),consulta.getTipoConsulta(),consulta.getNomePaciente(),consulta.getCodConsulta());
     }
 
-    
 }
-

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PagamentoController {
     
     private final PagamentoRepository pagamentoRepository;
+    private final ConsultRepositoy consultRepositoy;
 
     public PagamentoRepository getPagamentoRepository() {
         return pagamentoRepository;
@@ -39,8 +40,9 @@ public class PagamentoController {
     public static final String ATRIBUTO_OBJETO = "pagamento";
     public static final String ATRIBUTO_LISTA = "pagamentos";
 
-    public PagamentoController(PagamentoRepository pagamentoRepository) {
+    public PagamentoController(PagamentoRepository pagamentoRepository,ConsultRepositoy consultRepositoy) {
         this.pagamentoRepository = pagamentoRepository;
+        this.consultRepositoy = consultRepositoy;
     }
 
     @GetMapping
@@ -51,14 +53,13 @@ public class PagamentoController {
     }
 
 
-    // @GetMapping("/novo/{consulta}")
-    // public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
-    //     ConsultRepositoy consultRepositoy = new ConsultRepositoy();
-    //     Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
-    //     model.addAttribute(ATRIBUTO_OBJETO, new RegistroPagamento(consulta));
-    //     model.addAttribute("consulta", codConsulta);
-    //     return URL_FORM;
-    // }
+    @GetMapping("/novo/{consulta}")
+    public String novo(Model model,@PathVariable("consulta") Integer codConsulta) {
+        Consulta consulta = consultRepositoy.buscaPorCod(codConsulta);
+        model.addAttribute(ATRIBUTO_OBJETO, new RegistroPagamento(consulta));
+        model.addAttribute("consulta", codConsulta);
+        return URL_FORM;
+    }
 
 
 @PostMapping("/salvar")
@@ -83,20 +84,19 @@ public String abrirFormEditar(@PathVariable Integer codPagamento, Model model, R
 
 @PostMapping("/editar/{codPagamento}")
     public String atualizar(@PathVariable("codPagamento") Integer codPagamento, @ModelAttribute("codPagamento") RegistroPagamento pagamento, RedirectAttributes redirectAttributes) {
-        if (pagamentoRepository.updatePagamento(pagamento)) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, pagamento.getCodPagamento()+ " atualizado com sucesso");
-        } else {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, " Não foi possível atualizar "+pagamento.getCodPagamento());
-        }        
+        pagamentoRepository.updatePagamento(pagamento);
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, pagamento.getCodPagamento()+ " atualizado com sucesso");
         return URL_REDIRECT_LISTA; 
     }
 
-@PostMapping("/delete/{codPagamento}")
-public String postMethodName(@PathVariable Integer codPagamento, RedirectAttributes redirectAttributes) {
+@PostMapping("/excluir/{codPagamento}")
+public String postMethodName(@PathVariable Integer codPagamento, RedirectAttributes redirectAttributes, Model model) {
+   
     pagamentoRepository.deletePagamento(codPagamento);
     redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Pagamento excluído com sucesso.");
     
-    return URL_REDIRECT_LISTA;
+    
+    return "redirect:/consulta";
 }
     
 

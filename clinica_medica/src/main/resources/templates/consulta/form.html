@@ -24,7 +24,7 @@
             <label for="nomeMedico">Nome do Médico:</label>
             <input type="text" id="nomeMedico" th:field="*{nomeMedico}" required/>
             <label for="dataConsulta">Data da Consulta:</label>
-            <input type="datetime-local" id="dataConsulta" th:field="*{dataConsulta}" required/>
+            <input type="date" id="dataConsulta" th:field="*{dataConsulta}" required/>
             <label for="observacoes">Observações:</label>
             <input type="text" id="observacoes" th:field="*{observacoes}" required/>
             <label for="tipoConsulta">Tipo da Consulta:</label>
@@ -67,6 +67,7 @@
                         method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
                         style="display:inline;">
                         <button type="submit" class="btn btn-delete">Excluir</button>
+                    </form>    
                 </td>
             </tr>
         </table>
@@ -96,9 +97,12 @@
                 <td>
                     <a th:href="@{/pagamento/editar/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
                         class="btn btn-edit">Editar</a>
-                    <form th:action="@{/pagamento/delete/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
+                    <!-- <form th:action="@{/pagamento/delete/{codPagamento}(codPagamento=${pagamento.codPagamento})}"
                         method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
-                        <button type="submit" class="btn btn-delete">Excluir</button>
+                        <button type="submit" class="btn btn-delete">Excluir</button> -->
+                         <form th:action="@{/pagamento/excluir/{codPagamento}(codPagamento=${pagamento.codPagamento})}" method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
                 </td>
             </tr>
         </table>

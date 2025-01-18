@@ -2,7 +2,7 @@ package br.edu.iftm.tspi.pmvc.clinica_medica.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,14 +25,14 @@ import org.springframework.ui.Model;
 public class ConsultaController {
     
     private final ConsultRepositoy consultRepositoy;
+    private final PagamentoRepository pagamentoRepository;
+    private final PedidoExameRepository pedidoExameRepository;
 
     public ConsultRepositoy getConsultRepositoy() {
         return consultRepositoy;
     }
 
 
-    @Autowired
-    private PedidoExameController pedidoExameController;
 
     public static final String URL_LISTA = "consulta/lista";
     public static final String URL_FORM = "consulta/form";
@@ -42,8 +42,10 @@ public class ConsultaController {
     public static final String ATRIBUTO_OBJETO = "consulta";
     public static final String ATRIBUTO_LISTA = "consultas";
 
-    public ConsultaController(ConsultRepositoy consultRepositoy) {
+    public ConsultaController(ConsultRepositoy consultRepositoy, PagamentoRepository pagamentoRepository, PedidoExameRepository pedidoExameRepository) {
         this.consultRepositoy = consultRepositoy;
+        this.pagamentoRepository = pagamentoRepository;
+        this.pedidoExameRepository = pedidoExameRepository;
     }
 
     @GetMapping
@@ -62,43 +64,40 @@ public class ConsultaController {
     @PostMapping("/novo")
     public String salvar(@ModelAttribute("consulta") Consulta consulta, RedirectAttributes redirectAttributes) {
         consultRepositoy.novaConsulta(consulta);
-        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, consulta.getCodConsulta()+ " salva com sucesso");
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM,"Consulta salva com sucesso");
         return URL_REDIRECT_LISTA; 
     }
 
 
-    // @GetMapping("/editar/{codConsulta}")
-    // public String abrirFormEditar(@PathVariable("codConsulta") Integer codConsulta, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("/editar/{codConsulta}")
+    public String abrirFormEditar(@PathVariable("codConsulta") Integer codConsulta, Model model, RedirectAttributes redirectAttributes) {
         
-    //     Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);   
-    //     //
+        Consulta consultaBusca = consultRepositoy.buscaPorCod(codConsulta);   
+        //
         
-    //     List<PedidoExame> pedidosExame = new PedidoExameRepository().listarPorConsulta(consultaBusca);
-    //     List<RegistroPagamento> pagamentos = new PagamentoRepository().listarPorConsulta(consultaBusca);
-    //     //      
-    //     if (consultaBusca == null) {
-    //         redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
-    //         return URL_REDIRECT_LISTA;
-    //     } else {
-    //         model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
-    //         model.addAttribute("pedidosExame", pedidosExame);
-    //         model.addAttribute("pagamentos", pagamentos);
-    //         return URL_FORM; 
-    //     }        
-    // }
+        List<PedidoExame> pedidosExame = pedidoExameRepository.listarPorConsulta(consultaBusca);
+        List<RegistroPagamento> pagamentos = pagamentoRepository.listarPorConsulta(consultaBusca);
+        //      
+        if (consultaBusca == null) {
+            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, codConsulta+" não encontrado.");
+            return URL_REDIRECT_LISTA;
+        } else {
+            model.addAttribute(ATRIBUTO_OBJETO,consultaBusca);
+            model.addAttribute("pedidosExame", pedidosExame);
+            model.addAttribute("pagamentos", pagamentos);
+            return URL_FORM; 
+        }        
+    }
 
     @PostMapping("/editar/{codConsulta}")
     public String atualizar(@PathVariable("codConsulta") String codConsulta, @ModelAttribute("codConsulta") Consulta consulta, RedirectAttributes redirectAttributes) {
-        if (consultRepositoy.updateConsulta(consulta)) {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, consulta.getCodConsulta()+ " atualizado com sucesso");
-        } else {
-            redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, " Não foi possível atualizar "+consulta.getCodConsulta());
-        }        
+        consultRepositoy.updateConsulta(consulta);
+        redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM,"Consulta atualizado com sucesso");
         return URL_REDIRECT_LISTA; 
     }
 
 
-    @PostMapping(value = "/excluir/{codConsulta}")
+    @PostMapping("/excluir/{codConsulta}")
     public String excluir(@PathVariable("codConsulta") Integer codConsulta, RedirectAttributes redirectAttributes) {
         consultRepositoy.deleteConsulta(codConsulta); 
         redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Consulta excluída com sucesso.");

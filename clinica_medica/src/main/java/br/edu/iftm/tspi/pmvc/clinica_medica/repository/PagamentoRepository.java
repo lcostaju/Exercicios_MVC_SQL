@@ -1,6 +1,8 @@
 package br.edu.iftm.tspi.pmvc.clinica_medica.repository;
 
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,66 +56,157 @@ public class PagamentoRepository {
 
 
     public List<RegistroPagamento> listar() {
+        // String sql = """
+        //               select codPagamento as codPagamento,
+        //                      tipoPagamento as tipoPagamento,
+        //                      valorPagamento as valorPagamento,
+        //                      dataPagamento as dataPagamento,
+        //                      consulta_id as consulta_id,
+        //                      observacao as observacao
+        //               from RegistroPagamento;
+        //               """;
         String sql = """
-                      select cod_artista as codigo,
-                             nom_artista as nome
-                      from tb_artista;
-                      """;
-        return conexao.query(sql,
-                             new BeanPropertyRowMapper<>(RegistroPagamento.class)
-                            );
+                select 
+                    p.codPagamento as codPagamento,
+                    p.dataPagamento as dataPagamento,
+                    p.observacao as observacao,
+                    p.tipoPagamento as tipoPagamento,
+                    p.valorPagamento as valorPagamento,
+                    c.codConsulta as codConsulta,
+                    c.nomeMedico as nomeMedico,
+                    c.dataConsulta as dataConsulta,
+                    c.observacoes as observacoes_consulta,
+                    c.tipoConsulta as tipoConsulta,
+                    c.nomePaciente as nomePaciente
+
+                from 
+                    Consulta as c, RegistroPagamento as p
+
+                where
+                    p.consulta_id = c.codConsulta
+
+                """;
+        return conexao.query(sql, (rs,rowNum) -> getRegistroPagamento(rs));
     }
 
     public List<RegistroPagamento> listarPorConsulta(Consulta consulta) {
-        List<RegistroPagamento> pedidosConsulta = new ArrayList<>();
-        for (RegistroPagamento pedido : pagamentos2) {
-            if (pedido.getConsulta().getCodConsulta().equals(consulta.getCodConsulta())) {
-                pedidosConsulta.add(pedido);
-            }
-        }
-        return pedidosConsulta;
+        // List<RegistroPagamento> pedidosConsulta = new ArrayList<>();
+        // for (RegistroPagamento pedido : pagamentos2) {
+        //     if (pedido.getConsulta().getCodConsulta().equals(consulta.getCodConsulta())) {
+        //         pedidosConsulta.add(pedido);
+        //     }
+        // }
+        // return pedidosConsulta;
+        String sql = """
+                select 
+                    p.codPagamento as codPagamento,
+                    p.dataPagamento as dataPagamento,
+                    p.observacao as observacao,
+                    p.tipoPagamento as tipoPagamento,
+                    p.valorPagamento as valorPagamento,
+                    c.codConsulta as codConsulta,
+                    c.nomeMedico as nomeMedico,
+                    c.dataConsulta as dataConsulta,
+                    c.observacoes as observacoes_consulta,
+                    c.tipoConsulta as tipoConsulta,
+                    c.nomePaciente as nomePaciente
+
+                from 
+                    Consulta as c, RegistroPagamento as p
+
+                where
+                    p.consulta_id = c.codConsulta and 
+                    p.consulta_id = ?
+
+                """;
+
+                return conexao.query(sql, (rs,rowNum) -> getRegistroPagamento(rs),consulta.getCodConsulta());
     }
 
 
-    public RegistroPagamento buscaPorconsuConsulta(Consulta consulta) {
-        RegistroPagamento pedidoBusca = new RegistroPagamento(consulta);        
-        int index = pagamentos.indexOf(pedidoBusca);
-        if (index != -1) {
-            return pagamentos.get(index);
-        } else {
-            return null; 
-        }
-    }
+    // public RegistroPagamento buscaPorconsuConsulta(Consulta consulta) {
+    //     RegistroPagamento pedidoBusca = new RegistroPagamento(consulta);        
+    //     int index = pagamentos.indexOf(pedidoBusca);
+    //     if (index != -1) {
+    //         return pagamentos.get(index);
+    //     } else {
+    //         return null; 
+    //     }
+    // }
 
     public void novoPagamento(RegistroPagamento pagamento) {
-        //int cod = pagamentos2.size()+ 1;
-        int cod = pagamentos2.get(pagamentos2.size()-1).getCodPagamento() + 1;
-        pagamento.setCodPagamento(cod);
-        pagamentos2.add(pagamento);
-        //return this.consultas;
+        String sql = """
+                insert into RegistroPagamento (tipoPagamento,valorPagamento,dataPagamento,consulta_id,observacao)
+                values(?,?,?,?,?)
+                """;
+                conexao.update(sql, pagamento.getTipoPagamento(),pagamento.getValorPagamento(),pagamento.getDataPagamento(),pagamento.getConsulta().getCodConsulta(),pagamento.getObservacao());
     }
 
-    public boolean updatePagamento(RegistroPagamento pagamento) {
-        int index = pagamentos2.indexOf(pagamento);
-        if (index != -1) {
-            pagamentos2.set(index, pagamento);
-            return true;
-        }
-        return false;
+    public void updatePagamento(RegistroPagamento pagamento) {
+        String sql = """
+                update RegistroPagamento
+                set tipoPagamento = ?,
+                 valorPagamento = ?,
+                 dataPagamento = ?,
+                 observacao = ?
+                where codPagamento = ?
+                """;
+
+                conexao.update(sql, pagamento.getTipoPagamento(),pagamento.getValorPagamento(),pagamento.getDataPagamento(),pagamento.getObservacao(),pagamento.getCodPagamento());
     }
 
     public RegistroPagamento buscaPorCod(Integer codPagamento) {
-        RegistroPagamento pagamento = new RegistroPagamento(codPagamento);        
-        int index = pagamentos2.indexOf(pagamento);
-        if (index != -1) {
-            return pagamentos2.get(index);
-        } else {
-            return null; 
-        }
+        String sql = """
+                select 
+                    p.codPagamento as codPagamento,
+                    p.dataPagamento as dataPagamento,
+                    p.observacao as observacao,
+                    p.tipoPagamento as tipoPagamento,
+                    p.valorPagamento as valorPagamento,
+                    c.codConsulta as codConsulta,
+                    c.nomeMedico as nomeMedico,
+                    c.dataConsulta as dataConsulta,
+                    c.observacoes as observacoes_consulta,
+                    c.tipoConsulta as tipoConsulta,
+                    c.nomePaciente as nomePaciente
+
+                from 
+                    Consulta as c, RegistroPagamento as p
+
+                where
+                    p.consulta_id = c.codConsulta and 
+                    p.codPagamento = ?
+
+                """;
+
+                return conexao.queryForObject(sql, (rs,rowNum) -> getRegistroPagamento(rs),codPagamento);
     }
 
-    public boolean deletePagamento(Integer codPagamento) {
-        RegistroPagamento pagamento = new RegistroPagamento(codPagamento);
-        return pagamentos2.remove(pagamento);
+    public void deletePagamento(Integer codPagamento) {
+        String sql = """
+                delete from RegistroPagamento where codPagamento = ?
+                """;
+                conexao.update(sql, codPagamento);
+    }
+
+    public static RegistroPagamento getRegistroPagamento(ResultSet rs) throws SQLException{
+        RegistroPagamento pagamento = new RegistroPagamento();
+        pagamento.setCodPagamento(rs.getInt("codPagamento"));
+        pagamento.setDataPagamento(rs.getDate("dataPagamento"));
+        pagamento.setObservacao(rs.getString("observacao"));
+        pagamento.setTipoPagamento(rs.getString("tipoPagamento"));
+        pagamento.setValorPagamento(rs.getDouble("valorPagamento"));
+
+        Consulta consulta = new Consulta();
+        consulta.setCodConsulta(rs.getInt("codConsulta"));
+        consulta.setNomeMedico(rs.getString("nomeMedico"));
+        consulta.setDataConsulta(rs.getDate("dataConsulta"));
+        consulta.setObservacoes(rs.getString("observacoes_consulta"));
+        consulta.setTipoConsulta(rs.getString("tipoConsulta"));
+        consulta.setNomePaciente(rs.getString("nomePaciente"));
+
+        pagamento.setConsulta(consulta);
+
+        return pagamento;
     }
 }
