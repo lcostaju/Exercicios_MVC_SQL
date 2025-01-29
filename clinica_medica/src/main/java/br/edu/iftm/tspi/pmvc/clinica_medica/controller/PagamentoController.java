@@ -91,13 +91,9 @@ public String abrirFormEditar(@PathVariable Integer codPagamento, Model model, R
 
 @PostMapping("/excluir/{codPagamento}")
 public String postMethodName(@PathVariable Integer codPagamento, RedirectAttributes redirectAttributes, Model model) {
-   
     pagamentoRepository.deletePagamento(codPagamento);
     redirectAttributes.addFlashAttribute(ATRIBUTO_MENSAGEM, "Pagamento excluído com sucesso.");
-    
-    
     return "redirect:/consulta";
 }
-    
 
 }
